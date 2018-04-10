@@ -1,10 +1,25 @@
 package pscan_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/Konstantin8105/pscan"
 )
+
+func ExampleScanAddress() {
+	address := "localhost"
+	ps, err := pscan.ScanAddress(address)
+	if err != nil {
+		return
+	}
+	if len(ps) > 0 {
+		fmt.Println("Found opened ports")
+	}
+
+	// Output:
+	// Found opened ports
+}
 
 func TestScanAddressLocalhost(t *testing.T) {
 	address := "localhost"
