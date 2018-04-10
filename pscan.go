@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Scan scan specific port for specific address.
 func Scan(address string, port int) (used bool, err error) {
 	defer func() {
 		if err != nil {
@@ -47,6 +48,7 @@ func Scan(address string, port int) (used bool, err error) {
 	return
 }
 
+// ScanAddress scan all port for specific address
 func ScanAddress(address string) (usedPort []int, err error) {
 	for port := 1; port <= 65535; port++ {
 		var used bool

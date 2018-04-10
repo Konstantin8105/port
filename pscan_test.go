@@ -15,6 +15,16 @@ func TestScanAddressLocalhost(t *testing.T) {
 	for _, p := range ps {
 		t.Logf("Port %3d is open", p)
 	}
+	address = "127.0.0.1"
+	if len(ps) > 0 {
+		used, err := pscan.Scan(address, ps[0])
+		if !used {
+			t.Errorf("Addresses `localhost` and `127.0.0.1` is different")
+		}
+		if err != nil {
+			t.Errorf("Error in 127.0.0.1. %v", err)
+		}
+	}
 }
 
 func TestWrongAddress(t *testing.T) {
@@ -29,6 +39,10 @@ func TestWrongAddress(t *testing.T) {
 	if used {
 		t.Errorf("Cannot found open port for wrong address.")
 	}
+	if err == nil {
+		t.Errorf("Error cannot be nil for wrong address.")
+	}
+	_, err = pscan.ScanAddress("")
 	if err == nil {
 		t.Errorf("Error cannot be nil for wrong address.")
 	}
