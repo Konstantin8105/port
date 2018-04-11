@@ -1,15 +1,15 @@
-package pscan_test
+package port_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/Konstantin8105/pscan"
+	"github.com/Konstantin8105/port"
 )
 
 func ExampleScanAddress() {
 	address := "localhost"
-	ps, err := pscan.ScanAddress(address)
+	ps, err := port.ScanAddress(address)
 	if err != nil {
 		return
 	}
@@ -23,7 +23,7 @@ func ExampleScanAddress() {
 
 func TestScanAddressLocalhost(t *testing.T) {
 	address := "localhost"
-	ps, err := pscan.ScanAddress(address)
+	ps, err := port.ScanAddress(address)
 	if err != nil {
 		t.Errorf("Error in scanning address `%v`. %v", address, err)
 	}
@@ -32,7 +32,7 @@ func TestScanAddressLocalhost(t *testing.T) {
 	}
 	address = "127.0.0.1"
 	if len(ps) > 0 {
-		used, err := pscan.Scan(address, ps[0])
+		used, err := port.Scan(address, ps[0])
 		if !used {
 			t.Errorf("Addresses `localhost` and `127.0.0.1` is different")
 		}
@@ -43,21 +43,21 @@ func TestScanAddressLocalhost(t *testing.T) {
 }
 
 func TestWrongAddress(t *testing.T) {
-	used, err := pscan.Scan("wrong address", 229)
+	used, err := port.Scan("wrong address", 229)
 	if used {
 		t.Errorf("Cannot found open port for wrong address.")
 	}
 	if err == nil {
 		t.Errorf("Error cannot be nil for wrong address.")
 	}
-	used, err = pscan.Scan("", 229)
+	used, err = port.Scan("", 229)
 	if used {
 		t.Errorf("Cannot found open port for wrong address.")
 	}
 	if err == nil {
 		t.Errorf("Error cannot be nil for wrong address.")
 	}
-	_, err = pscan.ScanAddress("")
+	_, err = port.ScanAddress("")
 	if err == nil {
 		t.Errorf("Error cannot be nil for wrong address.")
 	}
@@ -66,12 +66,12 @@ func TestWrongAddress(t *testing.T) {
 func TestWrongIp(t *testing.T) {
 	address := "localhost"
 	ip := -23
-	used, err := pscan.Scan(address, ip)
+	used, err := port.Scan(address, ip)
 	if used || err == nil {
 		t.Errorf("Not correct for wrong IP `%v`. %v", ip, err)
 	}
 	ip = 230000
-	used, err = pscan.Scan(address, ip)
+	used, err = port.Scan(address, ip)
 	if used || err == nil {
 		t.Errorf("Not correct for wrong IP `%v`. %v", ip, err)
 	}

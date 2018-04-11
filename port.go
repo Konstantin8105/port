@@ -1,4 +1,4 @@
-package pscan
+package port
 
 import (
 	"fmt"
@@ -49,7 +49,7 @@ func Scan(address string, port int) (used bool, err error) {
 }
 
 // ScanAddress scan all port for specific address
-func ScanAddress(address string) (usedPort []int, err error) {
+func ScanAddress(address string) (usedPorts []int, err error) {
 	for port := 1; port <= 65535; port++ {
 		var used bool
 		used, err = Scan(address, port)
@@ -57,7 +57,7 @@ func ScanAddress(address string) (usedPort []int, err error) {
 			return
 		}
 		if used {
-			usedPort = append(usedPort, port)
+			usedPorts = append(usedPorts, port)
 		}
 	}
 	return
